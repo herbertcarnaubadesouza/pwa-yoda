@@ -35,11 +35,23 @@ firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 
-messaging.getToken({ vapidKey: 'BJ3mvEAQ6SWJ_2XsIITHNQybkbR4VMBf9FL3UXWWplWzkKHLhSvaCrQuKA8uQHn_lbq7OsGCzItPwVVCI-_p_y0' }).then((currentToken: any) => {
-  if (currentToken) {
-    console.log('Token de mensagem: ', currentToken);
-  } else {
-    console.log('Não é possível obter o token do Firebase Messaging');
+// Request for permission and get token
+Notification.requestPermission().then((permission) => {
+  if (permission === 'granted') {
+    console.log('Notification permission granted.');
+    // Get registration token. Initially this makes a network call, once retrieved
+    // subsequent calls to getToken will return from cache.
+    messaging.getToken({ vapidKey: 'BJ3mvEAQ6SWJ_2XsIITHNQybkbR4VMBf9FL3UXWWplWzkKHLhSvaCrQuKA8uQHn_lbq7OsGCzItPwVVCI-_p_y0' }).then((currentToken: any) => {
+      if (currentToken) {
+        // Send the token to your server and update the UI if necessary
+        console.log('Token de mensagem: ', currentToken);
+      } else {
+        // Show permission request UI
+        console.log('Não é possível obter o token do Firebase Messaging');
+      }
+    }).catch((err: any) => {
+      console.log('An error occurred while retrieving token. ', err);
+    });
   }
 });
 
@@ -89,33 +101,7 @@ registerRoute(
 );
 
 self.addEventListener('message', (event) => {
-  console.log(event.data.text());
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
-});
-
-self.addEventListener('install', function (event) {
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', function (event) {
-  event.waitUntil(self.clients.claim());
-});
-
-self.addEventListener('push', function (event) {
-  Notification.requestPermission().then((permission) => {
-    if (permission === 'granted') {
-      console.log('Notificação permitida.');
-
-      self.registration.showNotification('Título da Notificação', {
-        body: 'Conteúdo da Notificação',
-        icon: '/caminho/para/icone.png'
-      });
-    } else if (permission === 'denied') {
-      console.log('O usuário negou a permissão de notificação.');
-    } else {
-      console.log('O usuário dispensou a permissão de notificação.');
-    }
-  });
 });
