@@ -87,35 +87,19 @@ self.addEventListener('message', (event) => {
 // Any other custom service worker logic can go here.
 
 
-// Import Firebase scripts
-importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js');
 
-// Initialize Firebase
-// @ts-ignore
-firebase.initializeApp({
-  apiKey: "AIzaSyB0YLVsu24Ge4s3Kh83qPaWHuSd0kewkdM",
-  authDomain: "service-pwa-a0b8a.firebaseapp.com",
-  projectId: "service-pwa-a0b8a",
-  storageBucket: "service-pwa-a0b8a.appspot.com",
-  messagingSenderId: "864048105713",
-  appId: "1:864048105713:web:86495c6b0582557be6c150",
-  measurementId: "G-DCNTXD2GR7"
-});
 
-// Retrieve Firebase Messaging object.
-// @ts-ignore
-const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage((payload: any) => {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  // Customize notification here
-  const notificationTitle = 'Background Message Title';
-  const notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/firebase-logo.png',
-  };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});
+// messaging.onBackgroundMessage((payload: any) => {
+//   console.log('[firebase-messaging-sw.js] Received background message ', payload);
+//   // Customize notification here
+//   const notificationTitle = 'Background Message Title';
+//   const notificationOptions = {
+//     body: 'Background Message body.',
+//     icon: '/firebase-logo.png',
+//   };
+
+//   self.registration.showNotification(notificationTitle, notificationOptions);
+// });
 
