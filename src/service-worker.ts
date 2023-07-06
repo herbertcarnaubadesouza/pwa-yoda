@@ -1,5 +1,6 @@
 /// <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */
+/* eslint-disable import/first */
 
 
 // This service worker can be customized!
