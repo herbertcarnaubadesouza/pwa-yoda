@@ -94,3 +94,28 @@ self.addEventListener('message', (event) => {
     self.skipWaiting();
   }
 });
+
+self.addEventListener('install', function (event) {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', function (event) {
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('push', function (event) {
+  Notification.requestPermission().then((permission) => {
+    if (permission === 'granted') {
+      console.log('Notificação permitida.');
+
+      self.registration.showNotification('Título da Notificação', {
+        body: 'Conteúdo da Notificação',
+        icon: '/caminho/para/icone.png'
+      });
+    } else if (permission === 'denied') {
+      console.log('O usuário negou a permissão de notificação.');
+    } else {
+      console.log('O usuário dispensou a permissão de notificação.');
+    }
+  });
+});
