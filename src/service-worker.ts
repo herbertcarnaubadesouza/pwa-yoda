@@ -1,20 +1,25 @@
 /// <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */
 
+
 // This service worker can be customized!
 // See https://developers.google.com/web/tools/workbox/modules
 // for the list of available Workbox modules, or add any other
 // code you'd like.
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
+importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js');
 
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
-import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
+import { createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
 declare const self: ServiceWorkerGlobalScope;
+
+
 
 clientsClaim();
 
@@ -78,3 +83,37 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+
+
+// Import Firebase scripts
+importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js');
+
+// Initialize Firebase
+// @ts-ignore
+firebase.initializeApp({
+  apiKey: "AIzaSyB0YLVsu24Ge4s3Kh83qPaWHuSd0kewkdM",
+  authDomain: "service-pwa-a0b8a.firebaseapp.com",
+  projectId: "service-pwa-a0b8a",
+  storageBucket: "service-pwa-a0b8a.appspot.com",
+  messagingSenderId: "864048105713",
+  appId: "1:864048105713:web:86495c6b0582557be6c150",
+  measurementId: "G-DCNTXD2GR7"
+});
+
+// Retrieve Firebase Messaging object.
+// @ts-ignore
+const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage((payload: any) => {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  // Customize notification here
+  const notificationTitle = 'Background Message Title';
+  const notificationOptions = {
+    body: 'Background Message body.',
+    icon: '/firebase-logo.png',
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
