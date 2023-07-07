@@ -21,39 +21,39 @@ importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js')
 
 declare const firebase: any;
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB0YLVsu24Ge4s3Kh83qPaWHuSd0kewkdM",
-  authDomain: "service-pwa-a0b8a.firebaseapp.com",
-  projectId: "service-pwa-a0b8a",
-  storageBucket: "service-pwa-a0b8a.appspot.com",
-  messagingSenderId: "864048105713",
-  appId: "1:864048105713:web:86495c6b0582557be6c150",
-  measurementId: "G-DCNTXD2GR7"
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyB0YLVsu24Ge4s3Kh83qPaWHuSd0kewkdM",
+//   authDomain: "service-pwa-a0b8a.firebaseapp.com",
+//   projectId: "service-pwa-a0b8a",
+//   storageBucket: "service-pwa-a0b8a.appspot.com",
+//   messagingSenderId: "864048105713",
+//   appId: "1:864048105713:web:86495c6b0582557be6c150",
+//   measurementId: "G-DCNTXD2GR7"
+// };
 
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 
-const messaging = firebase.messaging();
+// const messaging = firebase.messaging();
 
-// Request for permission and get token
-Notification.requestPermission().then((permission) => {
-  if (permission === 'granted') {
-    console.log('Notification permission granted.');
-    // Get registration token. Initially this makes a network call, once retrieved
-    // subsequent calls to getToken will return from cache.
-    messaging.getToken({ vapidKey: 'BJ3mvEAQ6SWJ_2XsIITHNQybkbR4VMBf9FL3UXWWplWzkKHLhSvaCrQuKA8uQHn_lbq7OsGCzItPwVVCI-_p_y0' }).then((currentToken: any) => {
-      if (currentToken) {
-        // Send the token to your server and update the UI if necessary
-        console.log('Token de mensagem: ', currentToken);
-      } else {
-        // Show permission request UI
-        console.log('Não é possível obter o token do Firebase Messaging');
-      }
-    }).catch((err: any) => {
-      console.log('An error occurred while retrieving token. ', err);
-    });
-  }
-});
+// // Request for permission and get token
+// Notification.requestPermission().then((permission) => {
+//   if (permission === 'granted') {
+//     console.log('Notification permission granted.');
+//     // Get registration token. Initially this makes a network call, once retrieved
+//     // subsequent calls to getToken will return from cache.
+//     messaging.getToken({ vapidKey: 'BJ3mvEAQ6SWJ_2XsIITHNQybkbR4VMBf9FL3UXWWplWzkKHLhSvaCrQuKA8uQHn_lbq7OsGCzItPwVVCI-_p_y0' }).then((currentToken: any) => {
+//       if (currentToken) {
+//         // Send the token to your server and update the UI if necessary
+//         console.log('Token de mensagem: ', currentToken);
+//       } else {
+//         // Show permission request UI
+//         console.log('Não é possível obter o token do Firebase Messaging');
+//       }
+//     }).catch((err: any) => {
+//       console.log('An error occurred while retrieving token. ', err);
+//     });
+//   }
+// });
 
 // Notification setup
 setInterval(() => {
